@@ -1,0 +1,173 @@
+
+{% extends 'base.html' %}
+{% block header %}
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <link href="{{ url_for('static', filename = 'css/ownShop.css')}}" rel="stylesheet" type="text/css" />
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+{% endblock %}
+{% block content %}
+    <div class="main">
+        <div class="dashboard">
+          <div class="imgBox" id="pop">
+
+          </div>
+          <div class="links">
+           <a id="button1" > <i class="fas fa-pen-alt fa-2x"></i></a>
+            <i class="fas fa-book fa-2x"></i>
+            <form method="POST" action="/shops/delete">
+            
+          <button style="background-color: #222432; border: none;"> <i class="fas fa-user-minus fa-2x" id="out"></i></button> 
+          </form>
+            
+            <a href="/logout_seller">  <i class="fas fa-sign-out-alt fa-2x" id="out"></i></a>
+          </div>
+        </div>
+        <div class="table-board">
+            <div class="btun">
+                <h1>{{seller.shop_name}}</h1>
+                <button><a href="/shops/addproduct">Add product</a></button>
+            </div>
+
+          
+           
+
+
+ <div class="board"> 
+            
+
+            <div class="conatiner mt-5 ml-6" style="margin-left: 6rem; margin-right: 4rem;">
+          
+                <table class="table table-sm table-condensed table-striped table-hover " style="text-align: center";>
+                    <thead>
+                        <th>No</th>
+                        
+                        <th>Category</th>
+                        <th>Product</th>
+                        <th>Image</th>
+                        <th>Price(Rs)</th>
+                      
+                        
+                       
+                      
+                        <!-- <th>Edit</th> -->
+                        <th>Delete</th>
+                    </thead>
+                    <tbody>
+                      
+                        {% if products %}
+                        {% for product in products %}
+                    
+                      <tr>
+                       
+                          <td>{{loop.index}}</td>
+                          <td><a href="#" style="text-decoration: none; color: black;">{{product.catagory}}</a></td>
+                          <td>{{product.name}}</td>
+                          <td><img src="" alt="no" width="40" height="30"></td>
+                          <td>{{product.price}}</td>
+                
+                          <td><button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal-{{ product.id }}">
+                              Delete
+                            </button></td>
+                      </tr>
+              
+
+                                <!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal-{{ product.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{ product.name }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <span class="text-danger">Are you sure? You want to delete {{ product.name }} product!</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-warning" data-bs-dismiss="modal">Cancel</button>
+        <form action="{{url_for('deleteproduct', id = product.id)}}" method="POST">
+          <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+        </form>
+       
+    </div>
+  </div>
+</div>
+</div>
+
+{% endfor %}
+{% endif %}
+
+         
+            
+                   
+                    
+                    </tbody>
+                </table>
+            </div>
+      </div>
+ 
+
+  <div class="popup">
+<p>Owner: <b>{{seller.name}}</b></p>
+<p>Address: <b>{{seller.address}}</b></p>
+<p>City: <b>{{seller.city}}</b></p>
+<p>State: <b>{{seller.state}}<</b></p>
+<p>Email: <b>{{seller.email}}</b></p>
+<p>Mob: <b>{{seller.number}}</b></p>
+  </div>
+  </div>
+
+
+  <div class="popup1">
+    <div class="content">
+        <i class="fas fa-user fa-4x"id="user"></i>
+        <div class="close1">
+            <i class="fas fa-times" style="color: black;"></i>
+    </div>
+       <form method="POST" action="/shops/update">
+           
+           
+           <input type="text" placeholder="Email" value="{{seller.email}}" name="email" required>
+           <input type="number" placeholder="Phone No"value="{{seller.number}}" name="number" required>
+           <input type="text" placeholder="Address"value="{{seller.address}}" name="address" required>
+           <input type="text" placeholder="City" value="{{seller.city}}" name="city" required>
+    
+         <input type="submit" placeholder="Update" style="background:#082d63;width: 20%;
+         color: white;
+         border: navajowhite;">
+       </form>
+    </div>
+
+
+
+
+
+    <script>
+        document.getElementById("pop").addEventListener('mouseover', function(){
+              document.querySelector(".popup").style.visibility = "inherit";
+          })
+          document.getElementById("pop").addEventListener('mouseout', function(){
+              document.querySelector(".popup").style.visibility = "hidden";
+          })
+
+         
+          document.getElementById("button1").addEventListener('click', function(){
+            document.getElementById("button1").style.color= "red";
+            console.log('helo');
+            document.querySelector(".popup1").style.display = "flex";
+          })
+          document.querySelector(".close1").addEventListener("click", function(){
+              document.querySelector(".popup1").style.display = "none";
+          })
+          
+    </script>
+{% endblock %}

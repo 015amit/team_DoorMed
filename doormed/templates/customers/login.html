@@ -1,0 +1,38 @@
+
+{% extends 'base.html' %}
+{% include 'messages.html' %}
+
+{% block header %}
+    <link href="static/css/login.css" rel="stylesheet" type="text/css" />
+    {% endblock %}
+
+    {% block content %}
+    <div class="login">
+      <div class="con">
+          <h2>Health is always the first priority for everyone and so is our customer to us</h2>
+          <br>
+          <p>Delivering medicines to door with least human contact and also in a low cost</p>
+      </div>
+      <div class="centre">
+          <header>Welcome to DoorMed</header>
+          <form  method="POST">
+              <div class="txt_field">
+                  <input type="text" name="email" required>
+                  <span></span>
+                  <label>Username</label>
+              </div>
+              <div class="txt_field">
+                  <input type="password" name="password" required>
+                  <span></span>
+                  <label>Password</label>
+              </div>
+              <div class="pass">Forgot Password?</div><br>
+              <input type="submit" value="Sign-in">
+              <div class="signup">
+                  Not a member? <a href="/reg_user">SignUp</a>
+              </div>
+          </form>
+      </div>
+    
+    </div>
+    {% endblock %}
